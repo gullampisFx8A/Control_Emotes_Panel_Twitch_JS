@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logging Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        #viewToggle {
+            padding: 8px 16px;
+            background-color: #907cad;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #viewToggle:hover {
+            background-color: #7a6496;
+        }
+        #logContainer {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            word-wrap: break-word;
+        }
+        .chart-container {
+            display: none;
+            gap: 20px;
+        }
+        .chart-wrapper {
+            width: 48%;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .stats {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #f8f8f8;
+            border-radius: 4px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Logging Dashboard</h1>
+        <div class="controls">
+            <button id="viewToggle">Switch to Charts</button>
+            <span>Total Logs: <span id="logCount">0</span></span>
+        </div>
+        <div class="stats" id="statsContainer"></div>
+        <div id="logContainer"></div>
+        <div class="chart-container" id="chartContainer">
+            <div class="chart-wrapper">
+                <canvas id="platformChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="activityChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Получаем логи из основного окна
+        let logs = window.opener ? window.opener.logs || [] : [];
+
+        // Статистика по логам
+        function getLogStats() {
+            const platformCounts = {
+                Twitch: 0,
+                BTTV: 0,
+                '7TV': 0,
+                FFZ: 0,
+                Other: 0
+            };
+            const actionCounts = {
+                Added: 0,
+                Removed: 0,
+                Updated: 0,
+                Error: 0,
+                Debug: 0
+            };
+
+            logs.forEach(log => {
+                const msg = log.message.toLowerCase();
+                if (msg.includes('twitch')) platformCounts.Twitch++;
+                else if (msg.includes('btttv') || msg.includes('betterttv')) platformCounts.BTTV++;
+                else if (msg.includes('7tv')) platformCounts['7TV']++;
+                else if (msg.includes('ffz')) platformCounts.FFZ++;
+                else platformCounts.Other++;
+                if (msg.includes('added')) actionCounts.Added++;
+                else if (msg.includes('delete') || msg.includes('removed')) actionCounts.Removed++;
+                else if (msg.includes('update')) actionCounts.Updated++;
+                else if (msg.includes('error')) actionCounts.Error++;
+                else if (msg.includes('debug')) actionCounts.Debug++;
+            });
+
+            return { platformCounts, actionCounts };
+        }
+
+        // Обновление отображения
+        let isChartView = false;
+        const logContainer = document.getElementById('logContainer');
+        const chartContainer = document.getElementById('chartContainer');
+        const viewToggle = document.getElementById('viewToggle');
+        const logCount = document.getElementById('logCount');
+        const statsContainer = document.getElementById('statsContainer');
+        let platformChart, activityChart;
+
+        function updateDisplay() {
+            const stats = getLogStats();
+            logCount.textContent = logs.length;
+
+            statsContainer.innerHTML = `
+                Platforms: Twitch: ${stats.platformCounts.Twitch} | BTTV: ${stats.platformCounts.BTTV} | 
+                7TV: ${stats.platformCounts['7TV']} | FFZ: ${stats.platformCounts.FFZ} | Other: ${stats.platformCounts.Other}
+                <br>
+                Actions: Added: ${stats.actionCounts.Added} | Removed: ${stats.actionCounts.Removed} | 
+                Updated: ${stats.actionCounts.Updated} | Errors: ${stats.actionCounts.Error} | Debug: ${stats.actionCounts.Debug}
+            `;
+
+            if (!isChartView) {
+                logContainer.innerHTML = logs.map(log => 
+                    `<div class="log-entry">[${log.timestamp}] ${log.message}</div>`
+                ).join('');
+            } else {
+                if (platformChart) platformChart.destroy();
+                if (activityChart) activityChart.destroy();
+
+                platformChart = new Chart(document.getElementById('platformChart'), {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(stats.platformCounts),
+                        datasets: [{
+                            data: Object.values(stats.platformCounts),
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { position: 'top' },
+                            title: { display: true, text: 'Logs by Platform' }
+                        }
+                    }
+                });
+
+                activityChart = new Chart(document.getElementById('activityChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(stats.actionCounts),
+                        datasets: [{
+                            label: 'Count',
+                            data: Object.values(stats.actionCounts),
+                            backgroundColor: '#907cad'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                            title: { display: true, text: 'Logs by Action' }
+                        },
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Переключение вида
+        viewToggle.addEventListener('click', () => {
+            isChartView = !isChartView;
+            viewToggle.textContent = isChartView ? 'Switch to Logs' : 'Switch to Charts';
+            logContainer.style.display = isChartView ? 'none' : 'block';
+            chartContainer.style.display = isChartView ? 'flex' : 'none';
+            updateDisplay();
+        });
+
+        // Обновление логов в реальном времени
+        window.addEventListener('message', (event) => {
+            if (event.data && event.data.type === 'logUpdate') {
+                logs = event.data.logs;
+                updateDisplay();
+            }
+        });
+
+        // Инициализация
+        updateDisplay();
+    </script>
+</body>
+</html>
