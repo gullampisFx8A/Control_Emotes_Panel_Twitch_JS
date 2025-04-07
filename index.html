@@ -201,12 +201,13 @@
         });
 
         // Обновление логов в реальном времени
-        window.addEventListener('message', (event) => {
-            if (event.data && event.data.type === 'logUpdate') {
-                logs = event.data.logs;
-                updateDisplay();
-            }
-        });
+window.addEventListener('message', (event) => {
+    console.log('[LOG PAGE] Получено сообщение:', event.data); // Добавляем отладку
+    if (event.data && event.data.type === 'logUpdate') {
+        logs = event.data.logs;
+        updateDisplay();
+    }
+});
 
         // Инициализация
         updateDisplay();
