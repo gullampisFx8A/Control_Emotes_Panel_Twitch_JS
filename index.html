@@ -7,7 +7,8 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
-            background-color: #f0f0f0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
         }
         .container {
             max-width: 1200px;
@@ -31,17 +32,19 @@
             background-color: #7a6496;
         }
         #logContainer {
-            background: white;
+            background: rgba(255, 255, 255, 0.05);
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             max-height: 600px;
             overflow-y: auto;
+            backdrop-filter: blur(5px);
         }
         .log-entry {
             padding: 10px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             word-wrap: break-word;
+            color: #d0d0d0;
         }
         .chart-container {
             display: none;
@@ -49,16 +52,21 @@
         }
         .chart-wrapper {
             width: 48%;
-            background: white;
+            background: rgba(255, 255, 255, 0.05);
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
         }
         .stats {
             margin-bottom: 20px;
             padding: 10px;
-            background: #f8f8f8;
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 4px;
+            color: #c0c0c0;
+        }
+        h1 {
+            color: #ffffff;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -161,8 +169,15 @@
                     options: {
                         responsive: true,
                         plugins: {
-                            legend: { position: 'top' },
-                            title: { display: true, text: 'Logs by Platform' }
+                            legend: { 
+                                position: 'top',
+                                labels: { color: '#e0e0e0' }
+                            },
+                            title: { 
+                                display: true, 
+                                text: 'Logs by Platform',
+                                color: '#ffffff'
+                            }
                         }
                     }
                 });
@@ -181,10 +196,18 @@
                         responsive: true,
                         plugins: {
                             legend: { display: false },
-                            title: { display: true, text: 'Logs by Action' }
+                            title: { 
+                                display: true, 
+                                text: 'Logs by Action',
+                                color: '#ffffff'
+                            }
                         },
                         scales: {
-                            y: { beginAtZero: true }
+                            y: { 
+                                beginAtZero: true,
+                                ticks: { color: '#e0e0e0' }
+                            },
+                            x: { ticks: { color: '#e0e0e0' } }
                         }
                     }
                 });
@@ -201,13 +224,13 @@
         });
 
         // Обновление логов в реальном времени
-window.addEventListener('message', (event) => {
-    console.log('[LOG PAGE] Получено сообщение:', event.data); // Добавляем отладку
-    if (event.data && event.data.type === 'logUpdate') {
-        logs = event.data.logs;
-        updateDisplay();
-    }
-});
+        window.addEventListener('message', (event) => {
+            console.log('[LOG PAGE] Получено сообщение:', event.data);
+            if (event.data && event.data.type === 'logUpdate') {
+                logs = event.data.logs;
+                updateDisplay();
+            }
+        });
 
         // Инициализация
         updateDisplay();
