@@ -55,16 +55,16 @@
             font-size: 14px;
             color: #2f213b;
         }
-        .watchdog-section, .language-section, .font-size-section, .custom-colors-section {
+        .watchdog-section, .language-section, .font-size-section, .custom-colors-section, .gradient-section {
             margin-top: 15px;
         }
-        .watchdog-label, .language-label, .font-size-label, .custom-colors-label {
+        .watchdog-label, .language-label, .font-size-label, .custom-colors-label, .gradient-label {
             display: block;
             margin-bottom: 6px;
             font-size: 14px;
             color: #2f213b;
         }
-        .watchdog-interval, .font-size-input {
+        .watchdog-interval, .font-size-input, .gradient-angle {
             width: 126px;
             padding: 6px;
             border-radius: 6px;
@@ -82,17 +82,17 @@
             color: #bda3d7;
             font-size: 14px;
         }
-        .color-picker-group {
+        .color-picker-group, .gradient-color-group {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 8px;
         }
-        .color-picker-group label {
+        .color-picker-group label, .gradient-color-group label {
             font-size: 14px;
             color: #2f213b;
         }
-        .color-picker-group input[type="color"] {
+        .color-picker-group input[type="color"], .gradient-color-group input[type="color"] {
             width: 40px;
             height: 30px;
             padding: 2px;
@@ -100,7 +100,7 @@
             border-radius: 4px;
             cursor: pointer;
         }
-        .preview-colors-button, .reset-colors-button {
+        .preview-colors-button, .reset-colors-button, .preview-gradient-button, .reset-gradient-button {
             margin-top: 10px;
             padding: 6px 12px;
             border: none;
@@ -109,18 +109,18 @@
             font-size: 14px;
             transition: background 0.2s;
         }
-        .preview-colors-button {
+        .preview-colors-button, .preview-gradient-button {
             background: #907cad;
             color: #fff;
         }
-        .preview-colors-button:hover {
+        .preview-colors-button:hover, .preview-gradient-button:hover {
             background: #a88cc7;
         }
-        .reset-colors-button {
+        .reset-colors-button, .reset-gradient-button {
             background: #944646;
             color: #fff;
         }
-        .reset-colors-button:hover {
+        .reset-colors-button:hover, .reset-gradient-button:hover {
             background: #b55;
         }
     </style>
@@ -166,6 +166,42 @@
                 </div>
                 <button class="preview-colors-button">Предпросмотр</button>
                 <button class="reset-colors-button">Сбросить цвета</button>
+            </div>
+            <!-- Настройка градиента панели -->
+            <div class="gradient-section">
+                <label class="gradient-label">Градиент панели:</label>
+                <div class="gradient-color-group">
+                    <label>Начальный цвет:</label>
+                    <input type="color" class="panel-gradient-start">
+                </div>
+                <div class="gradient-color-group">
+                    <label>Конечный цвет:</label>
+                    <input type="color" class="panel-gradient-end">
+                </div>
+                <div class="gradient-color-group">
+                    <label>Угол (градусы):</label>
+                    <input type="number" class="gradient-angle panel-gradient-angle" value="180" min="0" max="360">
+                </div>
+                <button class="preview-gradient-button panel-gradient-preview">Предпросмотр</button>
+                <button class="reset-gradient-button panel-gradient-reset">Сбросить градиент</button>
+            </div>
+            <!-- Настройка градиента списка -->
+            <div class="gradient-section">
+                <label class="gradient-label">Градиент списка:</label>
+                <div class="gradient-color-group">
+                    <label>Начальный цвет:</label>
+                    <input type="color" class="list-gradient-start">
+                </div>
+                <div class="gradient-color-group">
+                    <label>Конечный цвет:</label>
+                    <input type="color" class="list-gradient-end">
+                </div>
+                <div class="gradient-color-group">
+                    <label>Угол (градусы):</label>
+                    <input type="number" class="gradient-angle list-gradient-angle" value="45" min="0" max="360">
+                </div>
+                <button class="preview-gradient-button list-gradient-preview">Предпросмотр</button>
+                <button class="reset-gradient-button list-gradient-reset">Сбросить градиент</button>
             </div>
         </div>
     </div>
