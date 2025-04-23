@@ -2,22 +2,23 @@
 <html>
 <head>
     <style>
+        /* Основной контейнер попапа */
         .settings-popup {
             position: fixed;
             top: 20%;
             left: 30%;
             width: 40%;
             height: 60%;
-            background: linear-gradient(181deg, hsla(50, 76%, 56%, 1) 0%, hsla(0, 37%, 37%, 1) 59%, hsla(276, 47%, 24%, 1) 79%);
+            background: #2f213b; /* Тёмный фон для контраста */
             border: 1px solid #bda3d7;
             border-radius: 12px;
             z-index: 10002;
-            padding: 10px;
-            color: #2f213b;
+            padding: 20px;
+            color: #fff;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
             opacity: 0;
-            transform: scale(0.8);
+            transform: scale(0.95);
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
         .settings-popup.popup-enter {
@@ -26,73 +27,112 @@
         }
         .settings-popup.popup-exit {
             opacity: 0;
-            transform: scale(0.8);
+            transform: scale(0.95);
         }
+
+        /* Кнопка закрытия */
         .close-button {
             position: absolute;
-            top: 8px;
-            right: 8px;
-            background: #2f213b;
+            top: 12px;
+            right: 12px;
+            background: #907cad;
             color: #fff;
             border: none;
             border-radius: 6px;
-            padding: 6px 12px;
+            padding: 8px 16px;
             cursor: pointer;
             font-size: 14px;
-            transition: background 0.2s;
+            transition: background 0.2s ease;
         }
         .close-button:hover {
             background: #a88cc7;
         }
+
+        /* Заголовок */
         .settings-title {
-            margin: 0 0 12px 0;
-            font-size: 18px;
-            color: #2f213b;
-            font-weight: bold;
+            margin: 0 0 20px 0;
+            font-size: 20px;
+            color: #fff;
+            font-weight: 600;
+            text-align: center;
         }
-        .settings-description {
-            margin: 0 0 12px 0;
+
+        /* Вкладки */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #bda3d7;
+            margin-bottom: 20px;
+        }
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background: #3b2a4b;
+            color: #bda3d7;
+            cursor: pointer;
             font-size: 14px;
-            color: #2f213b;
+            transition: background 0.2s ease, color 0.2s ease;
         }
-        .watchdog-section, .language-section, .font-size-section, .custom-colors-section, .gradient-section {
-            margin-top: 15px;
+        .tab.active {
+            background: #907cad;
+            color: #fff;
+            font-weight: 500;
         }
-        .watchdog-label, .language-label, .font-size-label, .custom-colors-label, .gradient-label {
+        .tab:hover {
+            background: #a88cc7;
+            color: #fff;
+        }
+
+        /* Контент вкладок */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .tab-content.active {
             display: block;
-            margin-bottom: 6px;
-            font-size: 14px;
-            color: #2f213b;
+            opacity: 1;
         }
-        .watchdog-interval, .font-size-input, .gradient-angle {
-            width: 126px;
-            padding: 6px;
+
+        /* Секции настроек */
+        .section {
+            margin-bottom: 20px;
+        }
+        .section-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #fff;
+            font-weight: 500;
+        }
+        .section-input, .section-select {
+            width: 100%;
+            padding: 8px;
             border-radius: 6px;
             border: 1px solid #bda3d7;
-            background: rgb(47, 33, 59);
+            background: #3b2a4b;
             color: #fff;
             font-size: 14px;
+            transition: border-color 0.2s ease;
         }
-        .language-select {
-            width: 100%;
-            padding: 6px;
-            border-radius: 6px;
-            border: 1px solid #bda3d7;
-            background: #2f213b;
-            color: #bda3d7;
-            font-size: 14px;
+        .section-input:focus, .section-select:focus {
+            border-color: #a88cc7;
+            outline: none;
         }
-        .color-picker-group, .gradient-color-group {
+
+        /* Группы для выбора цветов и градиентов */
+        .color-group, .gradient-group {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
+            gap: 12px;
+            margin-bottom: 12px;
         }
-        .color-picker-group label, .gradient-color-group label {
+        .color-group label, .gradient-group label {
             font-size: 14px;
-            color: #2f213b;
+            color: #fff;
+            min-width: 120px;
         }
-        .color-picker-group input[type="color"], .gradient-color-group input[type="color"] {
+        .color-group input[type="color"], .gradient-group input[type="color"] {
             width: 40px;
             height: 30px;
             padding: 2px;
@@ -100,110 +140,167 @@
             border-radius: 4px;
             cursor: pointer;
         }
-        .preview-colors-button, .reset-colors-button, .preview-gradient-button, .reset-gradient-button {
-            margin-top: 10px;
-            padding: 6px 12px;
+        .gradient-group input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #bda3d7;
+            background: #3b2a4b;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        /* Кнопки действий */
+        .action-button {
+            padding: 8px 16px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 14px;
-            transition: background 0.2s;
+            transition: background 0.2s ease;
+            margin-right: 10px;
         }
-        .preview-colors-button, .preview-gradient-button {
+        .preview-button {
             background: #907cad;
             color: #fff;
         }
-        .preview-colors-button:hover, .preview-gradient-button:hover {
+        .preview-button:hover {
             background: #a88cc7;
         }
-        .reset-colors-button, .reset-gradient-button {
+        .reset-button {
             background: #944646;
             color: #fff;
         }
-        .reset-colors-button:hover, .reset-gradient-button:hover {
+        .reset-button:hover {
             background: #b55;
+        }
+
+        /* Контейнер для контента */
+        .settings-content {
+            max-height: 80%;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        .settings-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .settings-content::-webkit-scrollbar-thumb {
+            background: #a88cc7;
+            border-radius: 4px;
+        }
+        .settings-content::-webkit-scrollbar-track {
+            background: #3b2a4b;
         }
     </style>
 </head>
 <body>
     <div class="settings-popup">
         <button class="close-button">Закрыть</button>
-        <h3 class="settings-title">Настройки</h3>
+        <h3 class="settings-title">Настройки панели</h3>
+        <div class="tabs">
+            <div class="tab active" data-tab="general">Общие</div>
+            <div class="tab" data-tab="colors">Цвета</div>
+            <div class="tab" data-tab="gradients">Градиенты</div>
+        </div>
         <div class="settings-content">
-            <p class="settings-description">Настройте параметры панели</p>
-            <!-- Настройка интервала watchdog -->
-            <div class="watchdog-section">
-                <label class="watchdog-label">Интервал проверки Watchdog (сек):</label>
-                <input type="number" class="watchdog-interval" value="10" min="1">
+            <!-- Вкладка: Общие настройки -->
+            <div class="tab-content active" id="general">
+                <div class="section">
+                    <label class="section-label">Интервал проверки Watchdog (сек):</label>
+                    <input type="number" class="section-input watchdog-interval" value="10" min="1">
+                </div>
+                <div class="section">
+                    <label class="section-label">Язык интерфейса:</label>
+                    <select class="section-select language-select">
+                        <option value="ru">Русский</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <div class="section">
+                    <label class="section-label">Размер текста кнопок (пиксели):</label>
+                    <input type="number" class="section-input font-size-input" value="16" min="1" max="35">
+                </div>
             </div>
-            <!-- Выбор языка -->
-            <div class="language-section">
-                <label class="language-label">Язык интерфейса:</label>
-                <select class="language-select">
-                    <option value="ru">Русский</option>
-                    <option value="en">English</option>
-                </select>
+            <!-- Вкладка: Цвета -->
+            <div class="tab-content" id="colors">
+                <div class="section">
+                    <label class="section-label">Пользовательские цвета:</label>
+                    <div class="color-group">
+                        <label>Фон панели:</label>
+                        <input type="color" class="panel-bg-color">
+                    </div>
+                    <div class="color-group">
+                        <label>Фон кнопок:</label>
+                        <input type="color" class="button-bg-color">
+                    </div>
+                    <div class="color-group">
+                        <label>Цвет текста:</label>
+                        <input type="color" class="text-color">
+                    </div>
+                    <div class="section">
+                        <button class="action-button preview-button preview-colors-button">Предпросмотр</button>
+                        <button class="action-button reset-button reset-colors-button">Сбросить</button>
+                    </div>
+                </div>
             </div>
-            <!-- Настройка размера шрифта -->
-            <div class="font-size-section">
-                <label class="font-size-label">Размер текста кнопок (пиксели):</label>
-                <input type="number" class="font-size-input" value="16" min="1" max="35">
-            </div>
-            <!-- Настройка пользовательских цветов -->
-            <div class="custom-colors-section">
-                <label class="custom-colors-label">Пользовательские цвета:</label>
-                <div class="color-picker-group">
-                    <label>Фон панели:</label>
-                    <input type="color" class="panel-bg-color">
+            <!-- Вкладка: Градиенты -->
+            <div class="tab-content" id="gradients">
+                <div class="section">
+                    <label class="section-label">Градиент панели:</label>
+                    <div class="gradient-group">
+                        <label>Начальный цвет:</label>
+                        <input type="color" class="panel-gradient-start">
+                    </div>
+                    <div class="gradient-group">
+                        <label>Конечный цвет:</label>
+                        <input type="color" class="panel-gradient-end">
+                    </div>
+                    <div class="gradient-group">
+                        <label>Угол (градусы):</label>
+                        <input type="number" class="panel-gradient-angle" value="180" min="0" max="360">
+                    </div>
+                    <div class="section">
+                        <button class="action-button preview-button panel-gradient-preview">Предпросмотр</button>
+                        <button class="action-button reset-button panel-gradient-reset">Сбросить</button>
+                    </div>
                 </div>
-                <div class="color-picker-group">
-                    <label>Фон кнопок:</label>
-                    <input type="color" class="button-bg-color">
+                <div class="section">
+                    <label class="section-label">Градиент списка:</label>
+                    <div class="gradient-group">
+                        <label>Начальный цвет:</label>
+                        <input type="color" class="list-gradient-start">
+                    </div>
+                    <div class="gradient-group">
+                        <label>Конечный цвет:</label>
+                        <input type="color" class="list-gradient-end">
+                    </div>
+                    <div class="gradient-group">
+                        <label>Угол (градусы):</label>
+                        <input type="number" class="list-gradient-angle" value="45" min="0" max="360">
+                    </div>
+                    <div class="section">
+                        <button class="action-button preview-button list-gradient-preview">Предпросмотр</button>
+                        <button class="action-button reset-button list-gradient-reset">Сбросить</button>
+                    </div>
                 </div>
-                <div class="color-picker-group">
-                    <label>Цвет текста:</label>
-                    <input type="color" class="text-color">
-                </div>
-                <button class="preview-colors-button">Предпросмотр</button>
-                <button class="reset-colors-button">Сбросить цвета</button>
-            </div>
-            <!-- Настройка градиента панели -->
-            <div class="gradient-section">
-                <label class="gradient-label">Градиент панели:</label>
-                <div class="gradient-color-group">
-                    <label>Начальный цвет:</label>
-                    <input type="color" class="panel-gradient-start">
-                </div>
-                <div class="gradient-color-group">
-                    <label>Конечный цвет:</label>
-                    <input type="color" class="panel-gradient-end">
-                </div>
-                <div class="gradient-color-group">
-                    <label>Угол (градусы):</label>
-                    <input type="number" class="gradient-angle panel-gradient-angle" value="180" min="0" max="360">
-                </div>
-                <button class="preview-gradient-button panel-gradient-preview">Предпросмотр</button>
-                <button class="reset-gradient-button panel-gradient-reset">Сбросить градиент</button>
-            </div>
-            <!-- Настройка градиента списка -->
-            <div class="gradient-section">
-                <label class="gradient-label">Градиент списка:</label>
-                <div class="gradient-color-group">
-                    <label>Начальный цвет:</label>
-                    <input type="color" class="list-gradient-start">
-                </div>
-                <div class="gradient-color-group">
-                    <label>Конечный цвет:</label>
-                    <input type="color" class="list-gradient-end">
-                </div>
-                <div class="gradient-color-group">
-                    <label>Угол (градусы):</label>
-                    <input type="number" class="gradient-angle list-gradient-angle" value="45" min="0" max="360">
-                </div>
-                <button class="preview-gradient-button list-gradient-preview">Предпросмотр</button>
-                <button class="reset-gradient-button list-gradient-reset">Сбросить градиент</button>
             </div>
         </div>
     </div>
+
+    <script>
+        // Логика переключения вкладок
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Удаляем активный класс у всех вкладок и контента
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                // Активируем выбранную вкладку и её контент
+                tab.classList.add('active');
+                const tabContent = document.getElementById(tab.dataset.tab);
+                tabContent.classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>
