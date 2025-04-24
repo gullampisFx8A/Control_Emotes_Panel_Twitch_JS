@@ -50,7 +50,7 @@
             "controlPanel": {
                 "background": "linear-gradient(282deg, #1a1a1a 0%, #848282 100%)",
                 "border": "1px solid #444",
-                "boxShadow": "0 4px 6px rgba(0, 0, 0, 0.5)",
+                "boxShadow": "rgb(0 0 0) 0px 18px 29px 3px",
                 "color": "#ddd"
             },
             "lastItemHighlight": {"backgroundColor": "rgba(255, 217, 0, 0.47)"},
@@ -90,7 +90,7 @@
             "controlPanel": {
                 "background": "-webkit-linear-gradient(270deg, #a694b1, #f0f0f0 0%, rgb(121, 121, 121) 100%)",
                 "border": "1px solid #999",
-                "boxShadow": "0 4px 6px rgba(0, 0, 0, 0.2)",
+                "boxShadow": "rgb(0 0 0) 0px 18px 29px 3px",
                 "color": "#000000"
             },
             "lastItemHighlight": {"backgroundColor": "rgba(255, 217, 0, 0.56)"},
@@ -130,7 +130,7 @@
             "controlPanel": {
                 "background": "-webkit-linear-gradient(90deg, rgb(0, 23, 89) 0%, rgb(18, 105, 99) 100%)",
                 "border": "1px solid #2a69ac",
-                "boxShadow": "0 4px 8px #1a3a8a",
+                "boxShadow": "rgb(0 0 0) 0px 18px 29px 3px",
                 "color": "#e0f2fa"
             },
             "lastItemHighlight": {"backgroundColor": "rgba(255, 217, 0, 0.6)"},
@@ -170,7 +170,7 @@
             "controlPanel": {
                 "background": "#1a1a1a",
                 "border": "1px solid #333",
-                "boxShadow": "0 4px 6px rgba(0, 0, 0, 0.7)",
+                "boxShadow": "rgb(0 0 0) 0px 18px 29px 3px",
                 "color": "#db7093"
             },
             "lastItemHighlight": {"backgroundColor": "rgba(199, 21, 133, 0.3)"},
@@ -210,7 +210,7 @@
             "controlPanel": {
                 "background": "linear-gradient(180deg, rgb(23, 86, 87), rgb(70, 171, 129), #6ec2c5)",
                 "border": "1px solid #2a8c8e",
-                "boxShadow": "0 4px 8px rgba(23, 94, 95, 0.52)",
+                "boxShadow": "rgb(0 0 0) 0px 18px 29px 3px",
                 "color": "#d1f1f2"
             },
             "lastItemHighlight": {"backgroundColor": "rgba(255, 217, 0, 0.55)"},
@@ -252,7 +252,7 @@
                 "backdropFilter": "blur(10px)",
                 "WebkitBackdropFilter": "blur(10px)",
                 "border": "1px solid rgba(255, 255, 255, 0.2)",
-                "boxShadow": "0 8px 32px rgba(0, 0, 0, 0.15)",
+                "boxShadow": "rgb(0 0 0) 0px 18px 29px 3px",
                 "borderRadius": "16px",
                 "color": "#ffffff"
             },
