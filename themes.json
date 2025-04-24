@@ -9,7 +9,7 @@
             "controlPanel": {
                 "background": "-webkit-linear-gradient(270deg, hsla(50, 76%, 56%, 1) 0%, hsla(32, 83%, 49%, 1) 25%, hsla(0, 37%, 37%, 1) 59%, hsla(276, 47%, 24%, 1) 79%, hsla(261, 11%, 53%, 1) 100%)",
                 "border": "1px solid #ccc",
-                "boxShadow": "0 4px 6px rgba(0, 0, 0, 0.1)",
+                "boxShadow": "rgb(0 0 0) 0px 18px 29px 3px",
                 "color": "#fff"
             },
             "lastItemHighlight": {"backgroundColor": "#ffd700"},
