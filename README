@@ -17,6 +17,4 @@ A userscript for Twitch that lets you hide emotes in chat based on the channel a
 - **Firefox Compatibility**: The script may have issues on Firefox. For the best experience, use Chrome with Tampermonkey.
 - Learn more at (https://control-emotes-panel-7btvfzttv.netlify.app).
 
-
-## Deployment Status
-[![Netlify Status](https://api.netlify.com/api/v1/badges/d29e274a-359c-44d3-8201-9e08275dda03/deploy-status)](https://app.netlify.com/sites/control-emotes-panel-7btvfzttv/deploys)
+ 
