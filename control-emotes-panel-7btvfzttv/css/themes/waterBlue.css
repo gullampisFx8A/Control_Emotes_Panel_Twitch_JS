@@ -1,0 +1,459 @@
+/* Основной контейнер панели управления */
+#control-panel {
+    position: fixed;
+    top: 0;
+    right: 380px;
+    width: 750px;
+    height: 735px;
+    background: -webkit-linear-gradient(90deg, rgb(0, 23, 89) 0%, rgb(18, 105, 99) 100%);
+    backdrop-filter: blur(12px); /* Эффект стекломорфизма */
+    border: 1px solid #296bc0;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: rgb(0, 0, 0) 0px 18px 29px 3px;
+    z-index: 10000;
+    font-family: Arial, sans-serif;
+    color: #e0f2fa;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    display: block;
+    overflow: hidden;
+}
+
+/* Состояние видимой панели */
+#control-panel.visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto; 
+    width: 750px;
+}
+
+/* Совместимость с существующим кодом */
+#control-panel[style*="display: none"] {
+    display: block !important;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Версия расширения */
+.version-label {
+    position: absolute;
+    top: 4px;
+    right: 10px;
+    color: #b3e0f2;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Заголовок */
+.title {
+    margin: 0 0 10px;
+    color: #4fc8b9;
+    text-align: center;
+    width: 245px;
+    position: relative;
+    top: 10px;
+    font-size: 16px;
+    right: 33px;
+}
+
+/* Список заблокированных элементов */
+#blocked-list {
+    height: 490px;
+    box-shadow: rgba(0, 0, 0, 0.85) -18px 69px 40px 0px inset;
+    max-height: 500px;
+    overflow-y: auto;
+    color: #b6cad3;
+    position: relative;
+    top: 10px;
+    border: 1px solid #2a69ac;
+    border-radius: 8px;
+    list-style: none;
+    padding: 10px;
+    background: linear-gradient(45deg, rgb(21, 45, 112) 0%, rgb(82, 169, 172) 100%);
+}
+
+#blocked-list::-webkit-scrollbar {
+    width: 25px;
+}
+
+#blocked-list::-webkit-scrollbar-thumb {
+    background-color: #4fb3c8;
+    border-radius: 8px;
+    border: 3px solid #2a69ac;
+    height: 80px;
+}
+
+#blocked-list::-webkit-scrollbar-track {
+    background: #2a69ac;
+    border-radius: 8px;
+}
+
+/* Элемент списка */
+.blocked-item {
+    padding: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.blocked-item:hover {
+    background-color: rgba(79, 179, 200, 0.5);
+    color: #e0f2fa;
+}
+
+.new-item {
+    background-color: rgba(255, 217, 0, 0.6); /* lastItemHighlight */
+    color: #e0f2fa;
+}
+
+li.blocked-item {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    font-weight: bold;
+    border-top: solid #2a69ac;
+}
+
+/* Текст, ссылки и дата в элементах списка */
+.blocked-item span {
+    color: #e0f2fa; /* listItemText */
+}
+
+.blocked-item a {
+    color: #b3e0f2; /* listItemLink */
+}
+
+.blocked-item .date {
+    color: #c0e0f0; /* listItemDate */
+}
+
+/* Кнопка удаления */
+.delete-button {
+    background: #022258;
+    color: #e0f2fa;
+    height: 35px;
+    width: 75px;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-button:hover {
+    background: linear-gradient(135deg, rgb(64, 124, 255) 0%, rgb(0, 3, 179) 56%, rgb(64, 93, 255) 98%, rgb(107, 154, 255) 100%);
+}
+
+/* Контейнер поиска */
+.search-container {
+    display: flex;
+    gap: 10px;
+    left: 160px;
+    width: 382px;
+    position: relative;
+    top: 549px;
+}
+
+/* Поле поиска */
+#search-input {
+    background: #2a69ac;
+    width: 300px;
+    height: 35px;
+    max-width: 459px;
+    color: #e0f2fa;
+    font-weight: bold;
+    padding: 5px 10px;
+    border: 1px solid #4fb3c8;
+    border-radius: 4px;
+    box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.6);
+}
+
+.input-container {
+    display: flex;
+    gap: 10px;
+    position: relative;
+    top: 70px;
+    left: 0px;
+}
+
+#search-input:focus {
+    outline: none;
+    border-color: #4fc8b9;
+}
+
+/* Кнопка поиска */
+#search-button {
+    background: #3d8eb9;
+    color: #011d59;
+    border: none;
+    width: 72px;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    position: relative;
+    top: 0px;
+    left: 3px;
+}
+
+#search-button:hover {
+    background: #4fb3c8;
+}
+
+/* Селектор платформы */
+#platform-select {
+    background: #2a69ac;
+    color: #e0f2fa;
+    border: 1px solid #4fb3c8;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 16px;
+    width: 150px;
+}
+
+#platform-select:focus {
+    outline: none;
+    border-color: #4fc8b9;
+}
+
+/* Поле ввода для добавления */
+#add-input {
+    background: #2a69ac;
+    color: #e0f2fa;
+    border: 1px solid #4fb3c8;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 16px;
+    width: 300px;
+}
+
+#add-input:focus {
+    outline: none;
+    border-color: #4fc8b9;
+}
+
+/* Кнопка добавления */
+#add-button {
+    background: #3d8eb9;
+    color: #011d59;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    width: 72px;
+    position: relative;
+    left: 3px;
+}
+
+#add-button:hover {
+    background: #4fb3c8;
+}
+
+/* Контейнер кнопок управления */
+.button-container {
+    width: 725px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 685px;
+}
+
+/* Все кнопки в button-container */
+.button-container button { 
+    background: #3d8eb9;
+    color: #011d59;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+.button-container button:hover {
+    background: #4fb3c8;
+}
+
+/* Контейнер селектора тем */
+.theme-selector-container {
+    top: 593px;
+    position: absolute;
+    width: 153px;
+}
+
+/* Селектор тем */
+#theme-select {
+    background: #2a69ac;
+    color: #cedce2;
+    border: 1px solid #4fb3c8;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 16px;
+    width: 150px;
+    height: 35px;
+}
+
+#theme-select:focus {
+    outline: none;
+    border-color: #4fc8b9;
+}
+
+/* Модальное окно графика */
+#chart-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
+}
+
+/* Контейнер графика */
+.chart-container {
+    background: #2a69ac;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 800px;
+    width: 90%;
+    position: relative;
+    color: #e0f2fa;
+}
+
+/* Кнопка закрытия графика */
+#close-chart-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #3d8eb9;
+    color: #011d59;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#close-chart-button:hover {
+    background: #4fb3c8;
+}
+
+/* Канвас графика */
+#stats-chart {
+    width: 100%;
+    height: 400px;
+}
+
+/* Кнопка открытия/закрытия панели */
+#open-panel-button {
+    display: flex;
+    color: #09415e;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 5px 5px 0px;
+    position: fixed;
+    top: 4px;
+    right: 85px;
+    height: 40px;
+    width: 195px;
+    z-index: 10001;
+    background: #3d8eb9;
+    border: 1px solid #2a69ac;
+    border-radius: 4px;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+    align-items: baseline;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+#open-panel-button:hover {
+    background: #136957;
+}
+
+/* Контейнер сортировки */
+#sortContainer {
+    display: flex;
+    justify-content: space-around;
+    background-color: #042251;
+    padding: 5px;
+    width: 683px;
+    border-radius: 8px 8px 0 0;
+    border: 1px solid #4fb3c8;
+    box-shadow: rgba(0, 0, 0, 0) 0px 15px 6px 0px;
+    z-index: 10001;
+    position: absolute;
+    top: 65px;
+    color: #e0f2fa;
+}
+
+ 
+
+#sortContainer button:hover {
+    background: #58e3ff5d;
+    border-radius: 8px; 
+}
+
+/* Счетчик */
+#counter {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 460px;
+    background-color: #3d8eb9;
+    color: #011d59;
+    border: 3px solid #011d59;
+    border-radius: 8px;
+    padding: 5px 0;
+    margin-left: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    position: relative;
+    bottom: 583px;
+    left: 217px;
+}
+
+/* Стили для кнопок Enable/Disable */
+#unblock-all-button, #block-all-button {
+    background: #3d8eb9;
+    color: #011d59;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+#unblock-all-button.active, #block-all-button.active {
+    background: #09415e;
+}
+
+#unblock-all-button:hover, #block-all-button:hover {
+    background: #4fb3c8;
+}
+
+/* Кнопка показа статистики */
+#show-stats-button {
+    position: relative;
+    left: 0px;
+}
