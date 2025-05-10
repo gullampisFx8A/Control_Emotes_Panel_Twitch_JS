@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Control Emotes Panel: Hide Twitch chat emotes by channel author with a management interface and context menu. Not supported by FFZ, BTTV, or 7TV.">
+    <meta name="keywords" content="twitch chat, block emotes, hide emotes, userscript, greasyfork, control emotes panel, twitch chat filter, 7tv, bttv, ffz, emote blocker">
+    <meta name="author" content="tapeavion">
+    <title>Control Emotes Panel - Hide Emotes in Twitch Chat</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/openiConPanelbttnVariant2.png">
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+        ym(101486355, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/101486355" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+</head>
+<body>
+    <header>
+        <h1>Control Emotes Panel</h1>
+        <p>A userscript to hide Twitch chat emotes based on the channel author's name, not supported by FFZ, BTTV, or 7TV. Features a management interface and context menu.</p>
+        <a href="https://greasyfork.org/en/scripts/520235-control-emotes-panel-2-6-52-c-tapeavion" class="btn">Download Now</a>
+    </header>
+
+    <section id="about">
+        <h2>About Control Emotes Panel</h2>
+        <p>A userscript for Twitch that lets you hide emotes in chat based on the channel author's name, a feature not supported by FFZ, BTTV, or 7TV. Blocked emotes are hidden, leaving chat messages intact.</p>
+        <ul>
+            <li>Hides emotes from blocked channels, even in other chats.</li>
+            <li>User-friendly interface for adding, removing, importing, and exporting blocked channels.</li>
+            <li>Context menu for quick emote management.</li>
+            <li>Smooth iOS-style toggle switch for the control panel.</li>
+        </ul>
+    </section>
+
+    <section id="features">
+        <h2>Features</h2>
+        <ul>
+            <li>Hide emotes in Twitch chat from blocked channels</li>
+            <li>User-friendly interface for managing channel lists</li>
+            <li>Context menu for quick emote management</li>
+            <li>Works across different Twitch chats</li>
+            <li>Smooth iOS-style toggle switch</li>
+        </ul>
+    </section>
+
+    <section id="installation">
+        <h2>How to Install</h2>
+        <h3>Option 1: Install as a Userscript</h3>
+        <ol>
+            <li>Install a userscript manager, such as <a href="https://www.tampermonkey.net/">Tampermonkey</a> or Greasemonkey.</li>
+            <li>Visit the <a href="https://greasyfork.org/en/scripts/520235-control-emotes-panel-2-6-52-c-tapeavion">GreasyFork page</a>.</li>
+            <li>Click "Install this script" and follow the prompts.</li>
+        </ol>
+        <h3>Option 2: Install as a Chrome Extension</h3>
+        <ol>
+            <li>Click the button below to download the extension file (packed in a .zip).</li>
+            <li>Extract the <code>.crx</code> file from the downloaded .zip.</li>
+            <li>Open Chrome and navigate to <code>chrome://extensions/</code>.</li>
+            <li>Enable "Developer mode" in the top-right corner.</li>
+            <li>Drag and drop the extracted <code>.crx</code> file onto the Extensions page.</li>
+            <li>Confirm the installation when prompted.</li>
+        </ol>
+        <a href="https://github.com/user-attachments/files/19986091/Control_Emotes_Panel_Chrome_For_twitchChat_STABLE.zip" class="btn" download>Download Chrome Extension (.zip)</a>
+        <!-- <p><strong>Security:</strong> The .crx file has been verified with SHA-256 hash: <code>ВАШ_ХЭШ</code>. Verify it using <code>sha256sum</code> or an online tool.</p> -->
+        <p><strong>Source Code:</strong> Available on <a href="https://github.com/sopernik566/Control_Emotes_Panel_Twitch_JS">GitHub</a>.</p>
+    </section>
+
+    <section id="screenshots">
+        <h2>Screenshots</h2>
+        <div class="screenshot-gallery">
+            <div class="screenshot-item">
+                <img src="images/panelPresent.png" alt="Control Emotes Panel main interface" class="screenshot-img">
+                <p>Main Panel Interface</p>
+            </div>
+            <div class="screenshot-item">
+                <img src="images/panelPresentDeafultTheme.png" alt="Control Emotes Panel with default theme" class="screenshot-img">
+                <p>Default Theme</p>
+            </div>
+            <div class="screenshot-item">
+                <img src="images/panelPresentWatertheme.png" alt="Control Emotes Panel with water theme" class="screenshot-img">
+                <p>Water Theme</p>
+            </div>
+            <div class="screenshot-item">
+                <img src="images/scrshtBlackRaspberryTheme.png" alt="Control Emotes Panel with Black Raspberry theme" class="screenshot-img">
+                <p>Black Raspberry Theme - Blocked List</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <h2>FAQ</h2>
+        <h3>How do I block emotes?</h3>
+        <p>Use the control panel or context menu to select and disable specific emotes in real-time.</p>
+        <h3>Is it free?</h3>
+        <p>Yes, completely free and open-source!</p>
+        <h3>Does it work on Firefox?</h3>
+        <p>Currently, the script may have issues on Firefox. For the best experience, use Chrome with Tampermonkey. We're working on Firefox compatibility!</p>
+    </section>
+
+    <footer>
+        <p>Created by tapeavion | <a href="https://greasyfork.org/en/scripts/520235-control-emotes-panel-2-6-52-c-tapeavion/feedback">Contact</a></p>
+        <p><a href="https://app.netlify.com/sites/control-emotes-panel-7btvfzttv/deploys"><img src="https://api.netlify.com/api/v1/badges/d29e274a-359c-44d3-8201-9e08275dda03/deploy-status" alt="Netlify Deploy Status"></a></p>
+    </footer>
+</body>
+</html>
