@@ -1,7 +1,8 @@
 # Control Emotes Panel 
 A userscript for Twitch that lets you hide emotes in chat based on the channel author's name, a feature not supported by FFZ, BTTV, or 7TV. Blocked emotes are hidden, leaving chat messages intact.
 
-## Features
+## Features![image](https://github.com/user-attachments/assets/8ea17bb6-e18a-4920-afa9-81bcb7b57765)
+
 - Hide emotes from blocked channels, even in other Twitch chats.
 - User-friendly interface for adding, removing, importing, and exporting channel lists.
 - Context menu for quick emote management.
